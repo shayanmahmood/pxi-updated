@@ -5,8 +5,23 @@ import Links from "./components/Links";
 
 // import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
 import routes from "@/routes.jsx";
+import { useTodos } from "../../features/todos/hooks/useTodos";
 
 const Sidebar = ({ open, onClose }) => {
+  const { todoLinks, isLoading } = useTodos();
+
+  if (isLoading) return;
+
+  if (!isLoading) console.log(todoLinks);
+
+  const updatedRoutes = routes
+    .filter((r) => !r.hidden) // hide parent routes
+    .map((r) =>
+      r.name === "Brain Dumping"
+        ? { ...r, children: todoLinks.filter((c) => !c.hidden) } // hide children
+        : r
+    );
+
   return (
     <div
       className={`sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${
@@ -29,7 +44,7 @@ const Sidebar = ({ open, onClose }) => {
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
-        <Links routes={routes} />
+        <Links routes={updatedRoutes} />
       </ul>
 
       {/* Free Horizon Card */}

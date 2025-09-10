@@ -20,6 +20,7 @@ import {
 } from "react-icons/md";
 import { BsTriangleHalf } from "react-icons/bs";
 import BrainDumping from "views/admin/brainDumping";
+import BrainDumpingCategory from "views/admin/brainDumping/components/BrainDumpingCategory";
 
 const routes = [
   {
@@ -35,6 +36,13 @@ const routes = [
     path: "brain-dumping",
     icon: <BsTriangleHalf className="h-6 w-6" />,
     component: <BrainDumping />,
+  },
+  {
+    name: "Brain Dumping Category",
+    layout: "/admin",
+    path: "brain-dumping/:categoryName",
+    component:<BrainDumpingCategory />,
+    hidden: true, // so it doesn’t show in sidebar
   },
   {
     name: "NFT Marketplace",
